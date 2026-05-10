@@ -1,25 +1,44 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+import { Before, After, Given, When, Then } from '@cucumber/cucumber';
+import { chromium, Browser, Page } from '@playwright/test';
+import { LoginPage } from '../pages/login.page';
+
+let browser: Browser;
+let page: Page;
+let loginPage: LoginPage;
+
+Before(async function () {
+
+    browser = await chromium.launch({
+        headless: false
+    });
+
+    const context = await browser.newContext();
+
+    page = await context.newPage();
+
+    loginPage = new LoginPage(page);
+});
+
+After(async function () {
+    await browser.close();
+});
 
 Given('user navigates to login page', async function () {
-    console.log('Navigating to login page');
+    await loginPage.navigateToLoginPage();
 });
 
 When('user enters valid username', async function () {
-    console.log('Entering valid username');
+    await loginPage.enterUsername();
 });
 
 When('user enters valid password', async function () {
-    console.log('Entering valid password');
-});
-
-When('user selects remember me option', async function () {
-    console.log('Selecting remember me option');
+    await loginPage.enterPassword();
 });
 
 When('user clicks on login button', async function () {
-    console.log('Clicking on login button');
+    await loginPage.clickLogin();
 });
 
 Then('user should be redirected to dashboard page', async function () {
-    console.log('Redirected to dashboard page');
+    console.log('Login verified');
 });

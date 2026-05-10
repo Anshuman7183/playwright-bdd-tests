@@ -1,14 +1,43 @@
+import { Page, expect } from '@playwright/test';
+import { loginLocators } from '../../Utilities/locators/login.locator';
+import testData from '../../Assets/test-data/data.json';
+
 export class LoginPage {
 
+    constructor(private page: Page) {}
+
     async navigateToLoginPage() {
-        console.log('Navigating to login page');
+        console.log("Opening URL:", testData.validUser.url);
+        await this.page.goto(testData.validUser.url, {
+            waitUntil: 'domcontentloaded',
+            timeout: 60000
+        });
+        console.log("Website Opened");
     }
 
-    async enterCredentials() {
-        console.log('Entering credentials');
+    async enterUsername() {
+        await this.page.fill(
+            loginLocators.usernameInput,
+            testData.validUser.username
+        );
     }
 
-    async verifyLogin() {
-        console.log('Login verified');
+    async enterPassword() {
+        await this.page.fill(
+            loginLocators.passwordInput,
+            testData.validUser.password
+        );
+    }
+
+    async clickLogin() {
+        await this.page.click(
+            loginLocators.loginButton
+        );
+    }
+
+    async verifySuccessfulLogin() {
+        await expect(
+            this.page.locator(loginLocators.successMessage)
+        ).toHaveText('Logged In Successfully');
     }
 }
