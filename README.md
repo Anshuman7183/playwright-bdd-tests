@@ -9,6 +9,7 @@ A scalable end-to-end test automation framework built using Playwright, Cucumber
 - Playwright
 - Cucumber
 - TypeScript
+- Gherkin
 - Node.js
 - VS Code
 - Git & GitHub
@@ -60,10 +61,12 @@ playwright-bdd-tests/
 
 ## Features Implemented
 
-- Playwright Browser Automation
+- Playwright Browser Automation with Typescript
 - Cucumber BDD Framework
 - Gherkin Feature Files
 - Page Object Model (POM)
+- Scenario tagging (@smoke, @regression, @login)
+- npm script based execution
 - Externalized Locators
 - JSON-based Test Data Management
 - Multiple Test Users
@@ -71,6 +74,14 @@ playwright-bdd-tests/
 - Assertions and Validation
 - Chromium Browser Execution
 - GitHub Version Control
+
+---
+
+## Tags
+- @login @smoke
+  Scenario: Successful login with valid credentials
+- @regression
+  Scenario: Login with invalid credentials
 
 ---
 
@@ -159,15 +170,17 @@ npx playwright install
 
 ---
 
-## Run Tests
-
-Execute all tests:
+## Execution Commands
 
 ```bash
 npm test
+npm run smoke
+npm run login
+npm run regression
 ```
 
 ---
+
 
 ## Framework Flow
 
