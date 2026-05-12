@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber-js",
-    "smoke": "cucumber-js --tags @smoke",
-    "regression": "cucumber-js --tags @regression",
-    "login": "cucumber-js --tags @login"
-    
+    "test": "cucumber-js && node report.js",
+    "smoke": "cucumber-js --tags @smoke && node report.js",
+    "regression": "cucumber-js --tags @regression && node report.js",
+    "login": "cucumber-js --tags @login && node report.js"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^12.8.2",
@@ -15,6 +14,7 @@
     "@types/node": "^25.6.2",
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
+    "multiple-cucumber-html-reporter": "^3.10.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   }

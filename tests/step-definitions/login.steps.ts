@@ -3,6 +3,7 @@ setDefaultTimeout(60000);
 import { chromium, Browser, Page, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 
+
 let browser: Browser;
 let page: Page;
 let loginPage: LoginPage;
@@ -21,7 +22,17 @@ Before({ timeout: 60000 }, async function () {
     loginPage = new LoginPage(page);
 });
 
-After(async function () {
+After(async function (scenario) {
+
+    if (scenario.result?.status === 'FAILED') {
+
+        await page.screenshot({
+            path: `reports/screenshots/${scenario.pickle.name}.png`,
+            fullPage: true
+        });
+
+    }
+
     if (browser) {
         await browser.close();
     }
